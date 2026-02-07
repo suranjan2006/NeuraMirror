@@ -1,4 +1,3 @@
-import os
 import json
 import time
 import streamlit as st
@@ -11,45 +10,36 @@ st.set_page_config(
     layout="centered"
 )
 
-# ---------------- ANIMATED BACKGROUND ----------------
-def animated_background():
-    st.markdown("""
-    <style>
-    body {
-        background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
-        background-size: 400% 400%;
-        animation: bgMove 20s ease infinite;
-        color: white;
-    }
-
-    @keyframes bgMove {
-        0% {background-position: 0% 50%;}
-        50% {background-position: 100% 50%;}
-        100% {background-position: 0% 50%;}
-    }
-
-    button {
-        transition: transform 0.2s ease;
-    }
-
-    button:hover {
-        transform: scale(1.05);
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-animated_background()
+# ---------------- BACKGROUND ----------------
+st.markdown("""
+<style>
+body {
+    background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: bgMove 20s ease infinite;
+    color: white;
+}
+@keyframes bgMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+button:hover {
+    transform: scale(1.05);
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ---------------- HEADER ----------------
 st.markdown("""
-<h1 style='text-align:center;'>🧠 NeuraMirror</h1>
-<h4 style='text-align:center; opacity:0.8;'>
+<h1 style="text-align:center;">🧠 NeuraMirror</h1>
+<h4 style="text-align:center; opacity:0.8;">
 Your digital habits. Reflected by AI.
 </h4>
 <hr>
 """, unsafe_allow_html=True)
 
-# ---------------- USER INPUT ----------------
+# ---------------- INPUTS ----------------
 st.subheader("Tell Neura about your daily habits")
 
 screen_time = st.slider("📱 Screen Time (hours/day)", 0, 15, 5)
@@ -59,12 +49,9 @@ sleep_hours = st.slider("😴 Sleep Hours", 0, 12, 7)
 stress_level = st.slider("😰 Stress Level (1–10)", 1, 10, 5)
 
 # ---------------- LOAD LOTTIE ----------------
-def load_lottie(filename):
-    base_path = os.path.dirname(__file__)
-    file_path = os.path.join(base_path, "assets", filename)
-
+def load_lottie(path):
     try:
-        with open(file_path, "r") as f:
+        with open(path, "r") as f:
             return json.load(f)
     except:
         return None
@@ -72,13 +59,13 @@ def load_lottie(filename):
 # ---------------- AI CHARACTER ----------------
 def ai_character(state):
     if state == "healthy":
-        anim = load_lottie("ai_calm.json")
+        anim = load_lottie("assets/ai_calm.json")
         msg = "Your digital balance looks healthy. Keep it up 🌱"
     elif state == "warning":
-        anim = load_lottie("ai_warning.json")
+        anim = load_lottie("assets/ai_warning.json")
         msg = "You’re drifting toward overload. Small changes help ⚠️"
     else:
-        anim = load_lottie("ai_danger.json")
+        anim = load_lottie("assets/ai_danger.json")
         msg = "High digital strain detected. Pause. Breathe. Reset 🚨"
 
     if anim:
@@ -89,8 +76,6 @@ def ai_character(state):
     st.markdown(f"<h3 style='text-align:center'>{msg}</h3>", unsafe_allow_html=True)
 
 # ---------------- ANALYSIS ----------------
-st.markdown("<br>", unsafe_allow_html=True)
-
 if st.button("🔍 Analyze Me"):
     with st.spinner("Neura is thinking..."):
         time.sleep(2)
