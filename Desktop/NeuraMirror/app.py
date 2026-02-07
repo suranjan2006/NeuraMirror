@@ -59,8 +59,12 @@ stress_level = st.slider("😰 Stress Level (1–10)", 1, 10, 5)
 
 # ---------------- AI CHARACTER ----------------
 def load_lottie(path):
-    with open(path, "r") as f:
-        return json.load(f)
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        st.error(f"Animation file not found: {path}")
+        return None
 def ai_character(state):
     if state == "healthy":
         anim = load_lottie("assets/ai_calm.json")
@@ -72,6 +76,7 @@ def ai_character(state):
         anim = load_lottie("assets/ai_danger.json")
         msg = "High digital strain detected. Pause. Breathe. Reset 🚨"
 
+    if anim:
     st_lottie(anim, height=260, key=state)
     st.markdown(f"<h3 style='text-align:center'>{msg}</h3>", unsafe_allow_html=True)
 
