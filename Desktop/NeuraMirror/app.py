@@ -98,3 +98,4 @@ if st.button("🔍 Analyze Me"):
     Neura doesn’t judge you. It reflects you.
     </p>
     """, unsafe_allow_html=True)
+    
