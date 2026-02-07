@@ -42,7 +42,7 @@ animated_background()
 
 # ---------------- HEADER ----------------
 st.markdown("""
-<h1 style='text-align:center;'>🧠 Neura Mirror</h1>
+<h1 style='text-align:center;'>🧠 NeuraMirror</h1>
 <h4 style='text-align:center; opacity:0.8;'>
 Your digital habits. Reflected by AI.
 </h4>
@@ -74,24 +74,19 @@ def ai_character(state):
     if state == "healthy":
         anim = load_lottie("ai_calm.json")
         msg = "Your digital balance looks healthy. Keep it up 🌱"
-
     elif state == "warning":
         anim = load_lottie("ai_warning.json")
         msg = "You’re drifting toward overload. Small changes help ⚠️"
-
     else:
         anim = load_lottie("ai_danger.json")
         msg = "High digital strain detected. Pause. Breathe. Reset 🚨"
 
     if anim:
-        st_lottie(anim, height=260, key=state)
+        st_lottie(anim, height=260)
     else:
-        st.write("⚠️ Animation not found")
+        st.warning("⚠️ Animation not found")
 
-    st.markdown(
-        f"<h3 style='text-align:center'>{msg}</h3>",
-        unsafe_allow_html=True
-    )
+    st.markdown(f"<h3 style='text-align:center'>{msg}</h3>", unsafe_allow_html=True)
 
 # ---------------- ANALYSIS ----------------
 st.markdown("<br>", unsafe_allow_html=True)
