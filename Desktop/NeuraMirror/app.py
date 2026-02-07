@@ -1,8 +1,8 @@
 import os
-from streamlit_lottie import st_lottie
 import json
-import streamlit as st
 import time
+import streamlit as st
+from streamlit_lottie import st_lottie
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -58,29 +58,40 @@ study_hours = st.slider("📚 Study / Work Hours", 0, 12, 4)
 sleep_hours = st.slider("😴 Sleep Hours", 0, 12, 7)
 stress_level = st.slider("😰 Stress Level (1–10)", 1, 10, 5)
 
-# ---------------- AI CHARACTER ----------------
-def load_lottie(path):
+# ---------------- LOAD LOTTIE ----------------
+def load_lottie(filename):
+    base_path = os.path.dirname(__file__)
+    file_path = os.path.join(base_path, "assets", filename)
+
     try:
-        with open(path, "r") as f:
+        with open(file_path, "r") as f:
             return json.load(f)
-    except Exception as e:
-        st.error(f"Animation file not found: {path}")
+    except:
         return None
+
+# ---------------- AI CHARACTER ----------------
 def ai_character(state):
     if state == "healthy":
-        anim = load_lottie("assets/ai_calm.json")
+        anim = load_lottie("ai_calm.json")
         msg = "Your digital balance looks healthy. Keep it up 🌱"
+
     elif state == "warning":
-        anim = load_lottie("assets/ai_warning.json")
+        anim = load_lottie("ai_warning.json")
         msg = "You’re drifting toward overload. Small changes help ⚠️"
+
     else:
-        anim = load_lottie("assets/ai_danger.json")
+        anim = load_lottie("ai_danger.json")
         msg = "High digital strain detected. Pause. Breathe. Reset 🚨"
 
     if anim:
-    st_lottie(anim, height=260, key=state)
-    st.markdown(f"<h3 style='text-align:center'>{msg}</h3>", unsafe_allow_html=True)
+        st_lottie(anim, height=260, key=state)
+    else:
+        st.write("⚠️ Animation not found")
 
+    st.markdown(
+        f"<h3 style='text-align:center'>{msg}</h3>",
+        unsafe_allow_html=True
+    )
 
 # ---------------- ANALYSIS ----------------
 st.markdown("<br>", unsafe_allow_html=True)
