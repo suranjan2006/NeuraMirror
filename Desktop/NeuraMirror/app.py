@@ -71,6 +71,12 @@ if st.button("🔍 Analyze Me"):
         time.sleep(2)
 
     score = screen_time + social_time + stress - sleep_time
+    # ---------------- DIGITAL HEALTH SCORE ----------------
+health_score = max(0, min(100, 100 - (score * 5)))
+
+st.markdown("### 🧠 Digital Health Score")
+st.metric(label="Score (out of 100)", value=health_score)
+st.progress(health_score / 100)
 
     st.markdown("---")
     st.subheader("🧠 AI Reflection")
@@ -79,6 +85,19 @@ if st.button("🔍 Analyze Me"):
     if score < 10:
         st_lottie(load_lottie_url(LOTTIE["healthy"]), height=260)
         st.success("Your digital balance looks healthy 🌱")
+        st.markdown("### ✅ What you're doing right")
+st.markdown("""
+- Balanced screen usage  
+- Healthy sleep routine  
+- Stress is under control  
+""")
+
+st.markdown("### 💡 Keep maintaining this")
+st.markdown("""
+- Take regular breaks  
+- Avoid late-night scrolling  
+- Keep your sleep schedule consistent  
+""")
 
         st.markdown("""
         **What you're doing right:**
@@ -124,6 +143,19 @@ if st.button("🔍 Analyze Me"):
         - Add physical movement  
         - Consider mindfulness / breathing  
         """)
+        st.markdown("---")
+st.markdown("## 🧠 Neura’s Final Advice")
+
+st.markdown("""
+Small changes, done consistently, create powerful results.
+
+You don’t need to fix everything today — just one habit at a time.
+""")
+
+st.info("""
+🌱 **Daily Rule:**  
+If screen time increases → sleep time must also increase.
+""")
 
     st.markdown("""
     <p style="text-align:center; opacity:0.7;">
