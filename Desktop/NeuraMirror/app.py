@@ -82,33 +82,24 @@ st.progress(health_score / 100)
     st.subheader("🧠 AI Reflection")
 
     # ---------- HEALTHY ----------
+    # -------- HEALTHY --------
     if score < 10:
         st_lottie(load_lottie_url(LOTTIE["healthy"]), height=260)
         st.success("Your digital balance looks healthy 🌱")
-        st.markdown("### ✅ What you're doing right")
-st.markdown("""
-- Balanced screen usage  
-- Healthy sleep routine  
-- Stress is under control  
-""")
 
-st.markdown("### 💡 Keep maintaining this")
-st.markdown("""
-- Take regular breaks  
-- Avoid late-night scrolling  
-- Keep your sleep schedule consistent  
-""")
+        st.markdown(
+            """
+            ### ✅ What you're doing right
+            - Balanced screen usage
+            - Healthy sleep routine
+            - Stress is under control
 
-        st.markdown("""
-        **What you're doing right:**
-        - Balanced screen usage  
-        - Good sleep routine  
-        - Stress under control  
-
-        **Suggestions to maintain this:**
-        - Keep sleep ≥ 7 hours  
-        - Take screen breaks every 60–90 minutes  
-        """)
+            ### 💡 Keep maintaining this
+            - Take regular breaks
+            - Avoid late-night scrolling
+            - Keep your sleep schedule consistent
+            """
+        )
 
     # ---------- WARNING ----------
     elif score < 18:
