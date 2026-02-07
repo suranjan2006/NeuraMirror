@@ -1,6 +1,7 @@
 import time
+import requests
 import streamlit as st
-from streamlit_lottie import st_lottie_url
+from streamlit_lottie import st_lottie
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -8,6 +9,13 @@ st.set_page_config(
     page_icon="🧠",
     layout="centered"
 )
+
+# ---------------- LOAD LOTTIE FROM URL ----------------
+def load_lottie_url(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
 
 # ---------------- BACKGROUND ----------------
 st.markdown("""
@@ -59,7 +67,13 @@ def ai_character(state):
         url = "https://assets9.lottiefiles.com/packages/lf20_gz3t8c.json"
         msg = "High digital strain detected. Pause. Breathe. Reset 🚨"
 
-    st_lottie_url(url, height=260)
+    animation = load_lottie_url(url)
+
+    if animation:
+        st_lottie(animation, height=260)
+    else:
+        st.warning("Animation failed to load")
+
     st.markdown(f"<h3 style='text-align:center'>{msg}</h3>", unsafe_allow_html=True)
 
 # ---------------- ANALYSIS ----------------
