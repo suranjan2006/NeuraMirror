@@ -71,89 +71,67 @@ if st.button("🔍 Analyze Me"):
         time.sleep(2)
 
     score = screen_time + social_time + stress - sleep_time
-    # ---------------- DIGITAL HEALTH SCORE ----------------
-health_score = max(0, min(100, 100 - (score * 5)))
 
-st.markdown("### 🧠 Digital Health Score")
-st.metric(label="Score (out of 100)", value=health_score)
-st.progress(health_score / 100)
+    health_score = max(0, min(100, 100 - (score * 5)))
+
+    st.markdown("### 🧠 Digital Health Score")
+    st.metric(label="Score (out of 100)", value=health_score)
+    st.progress(health_score / 100)
 
     st.markdown("---")
     st.subheader("🧠 AI Reflection")
 
-    # ---------- HEALTHY ----------
-    # -------- HEALTHY --------
     if score < 10:
         st_lottie(load_lottie_url(LOTTIE["healthy"]), height=260)
         st.success("Your digital balance looks healthy 🌱")
 
-        st.markdown(
-            """
-            ### ✅ What you're doing right
-            - Balanced screen usage
-            - Healthy sleep routine
-            - Stress is under control
-
-            ### 💡 Keep maintaining this
-            - Take regular breaks
-            - Avoid late-night scrolling
-            - Keep your sleep schedule consistent
-            """
-        )
-
-    # ---------- WARNING ----------
-    elif score < 18:
-        st_lottie(load_lottie_url(LOTTIE["warning"]), height=260)
-        st.warning("You’re drifting toward overload ⚠️")
-
         st.markdown("""
-        **What needs attention:**
-        - Screen or social media time is increasing  
-        - Stress is slowly building  
+        ### ✅ What you're doing right
+        - Balanced screen usage
+        - Healthy sleep routine
+        - Stress is under control
 
-        **Suggested improvements:**
-        - Reduce social media by 30–45 minutes  
-        - Add one offline activity daily  
-        - Sleep at consistent time  
+        ### 💡 Keep maintaining this
+        - Take regular breaks
+        - Avoid late-night scrolling
+        - Keep your sleep schedule consistent
         """)
 
-    # ---------- DANGER ----------
+    elif score < 18:
+        st_lottie(load_lottie_url(LOTTIE["warning"]), height=260)
+        st.warning("You're drifting toward overload ⚠️")
+
+        st.markdown("""
+        **Habits to improve:**
+        - Reduce screen & social media time
+        - Improve sleep consistency
+
+        **Try this:**
+        - Set app limits
+        - Take short walks
+        - Digital detox before sleep
+        """)
+
     else:
         st_lottie(load_lottie_url(LOTTIE["danger"]), height=260)
         st.error("High digital strain detected 🚨")
 
         st.markdown("""
         **Critical habits to change:**
-        - Excessive screen & social media usage  
-        - Poor sleep  
-        - High stress levels  
+        - Excessive screen usage
+        - Poor sleep
+        - High stress
 
         **Immediate actions:**
-        - Digital detox before sleep  
-        - Limit social media strictly  
-        - Add physical movement  
-        - Consider mindfulness / breathing  
+        - Strict screen limits
+        - Physical activity
+        - Mindfulness / breathing
         """)
-        st.markdown("---")
-st.markdown("## 🧠 Neura’s Final Advice")
 
-st.markdown("""
-Small changes, done consistently, create powerful results.
-
-You don’t need to fix everything today — just one habit at a time.
-""")
-
-st.info("""
-🌱 **Daily Rule:**  
-If screen time increases → sleep time must also increase.
-""")
-
-    st.markdown("""
-    <p style="text-align:center; opacity:0.7;">
-    Neura doesn’t judge you. It reflects you.
-    </p>
-    """, unsafe_allow_html=True)
-
+    st.markdown(
+        "<p style='text-align:center; opacity:0.7;'>Neura doesn’t judge you. It reflects you.</p>",
+        unsafe_allow_html=True
+    )
 st.markdown("---")
 
 st.markdown(
