@@ -1,7 +1,7 @@
-import time
-import requests
 import streamlit as st
 from streamlit_lottie import st_lottie
+import requests
+import time
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -10,20 +10,13 @@ st.set_page_config(
     layout="centered"
 )
 
-# ---------------- LOAD LOTTIE FROM URL ----------------
-def load_lottie_url(url):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
-
 # ---------------- BACKGROUND ----------------
 st.markdown("""
 <style>
 body {
     background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
     background-size: 400% 400%;
-    animation: bgMove 20s ease infinite;
+    animation: bgMove 18s ease infinite;
     color: white;
 }
 @keyframes bgMove {
@@ -46,56 +39,90 @@ Your digital habits. Reflected by AI.
 <hr>
 """, unsafe_allow_html=True)
 
-# ---------------- INPUTS ----------------
+# ---------------- INPUT ----------------
 st.subheader("Tell Neura about your daily habits")
 
 screen_time = st.slider("📱 Screen Time (hours/day)", 0, 15, 5)
-social_media = st.slider("📲 Social Media Time (hours)", 0, 10, 3)
-study_hours = st.slider("📚 Study / Work Hours", 0, 12, 4)
-sleep_hours = st.slider("😴 Sleep Hours", 0, 12, 7)
-stress_level = st.slider("😰 Stress Level (1–10)", 1, 10, 5)
+social_time = st.slider("📲 Social Media Time (hours)", 0, 10, 3)
+study_time = st.slider("📚 Study / Work Hours", 0, 12, 4)
+sleep_time = st.slider("😴 Sleep Hours", 0, 12, 7)
+stress = st.slider("😰 Stress Level (1–10)", 1, 10, 5)
 
-# ---------------- AI CHARACTER ----------------
-def ai_character(state):
-    if state == "healthy":
-        url = "https://assets9.lottiefiles.com/packages/lf20_jbrw3hcz.json"
-        msg = "Your digital balance looks healthy. Keep it up 🌱"
-    elif state == "warning":
-        url = "https://assets9.lottiefiles.com/packages/lf20_touohxv0.json"
-        msg = "You’re drifting toward overload. Small changes help ⚠️"
-    else:
-        url = "https://assets9.lottiefiles.com/packages/lf20_gz3t8c.json"
-        msg = "High digital strain detected. Pause. Breathe. Reset 🚨"
+# ---------------- LOTTIE LOADER ----------------
+def load_lottie_url(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
 
-    animation = load_lottie_url(url)
-
-    if animation:
-        st_lottie(animation, height=260)
-    else:
-        st.warning("Animation failed to load")
-
-    st.markdown(f"<h3 style='text-align:center'>{msg}</h3>", unsafe_allow_html=True)
+LOTTIE = {
+    "healthy": "https://assets9.lottiefiles.com/packages/lf20_jcikwtux.json",
+    "warning": "https://assets9.lottiefiles.com/packages/lf20_ydo1amjm.json",
+    "danger": "https://assets9.lottiefiles.com/packages/lf20_tutvdkg0.json"
+}
 
 # ---------------- ANALYSIS ----------------
 if st.button("🔍 Analyze Me"):
     with st.spinner("Neura is thinking..."):
         time.sleep(2)
 
-    score = screen_time + social_media + stress_level - sleep_hours
+    score = screen_time + social_time + stress - sleep_time
 
     st.markdown("---")
     st.subheader("🧠 AI Reflection")
 
+    # ---------- HEALTHY ----------
     if score < 10:
-        ai_character("healthy")
+        st_lottie(load_lottie_url(LOTTIE["healthy"]), height=260)
+        st.success("Your digital balance looks healthy 🌱")
+
+        st.markdown("""
+        **What you're doing right:**
+        - Balanced screen usage  
+        - Good sleep routine  
+        - Stress under control  
+
+        **Suggestions to maintain this:**
+        - Keep sleep ≥ 7 hours  
+        - Take screen breaks every 60–90 minutes  
+        """)
+
+    # ---------- WARNING ----------
     elif score < 18:
-        ai_character("warning")
+        st_lottie(load_lottie_url(LOTTIE["warning"]), height=260)
+        st.warning("You’re drifting toward overload ⚠️")
+
+        st.markdown("""
+        **What needs attention:**
+        - Screen or social media time is increasing  
+        - Stress is slowly building  
+
+        **Suggested improvements:**
+        - Reduce social media by 30–45 minutes  
+        - Add one offline activity daily  
+        - Sleep at consistent time  
+        """)
+
+    # ---------- DANGER ----------
     else:
-        ai_character("danger")
+        st_lottie(load_lottie_url(LOTTIE["danger"]), height=260)
+        st.error("High digital strain detected 🚨")
+
+        st.markdown("""
+        **Critical habits to change:**
+        - Excessive screen & social media usage  
+        - Poor sleep  
+        - High stress levels  
+
+        **Immediate actions:**
+        - Digital detox before sleep  
+        - Limit social media strictly  
+        - Add physical movement  
+        - Consider mindfulness / breathing  
+        """)
 
     st.markdown("""
     <p style="text-align:center; opacity:0.7;">
     Neura doesn’t judge you. It reflects you.
     </p>
     """, unsafe_allow_html=True)
-    
