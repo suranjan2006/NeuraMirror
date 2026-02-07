@@ -9,7 +9,11 @@ st.set_page_config(
     page_icon="🧠",
     layout="centered"
 )
-
+# ---------------- SIDEBAR AUTHOR ----------------
+st.sidebar.markdown("## 👨‍💻 Author")
+st.sidebar.markdown("**Suranjan Chaudhari**")
+st.sidebar.markdown("AIML Student · India 🇮🇳")
+st.sidebar.markdown("[GitHub Profile](https://github.com/suranjan2006)")
 # ---------------- BACKGROUND ----------------
 st.markdown("""
 <style>
@@ -126,3 +130,21 @@ if st.button("🔍 Analyze Me"):
     Neura doesn’t judge you. It reflects you.
     </p>
     """, unsafe_allow_html=True)
+
+st.markdown("---")
+
+st.markdown(
+    """
+    <div style="text-align:center; opacity:0.7; font-size:14px;">
+        <p>🧠 Built with ❤️ by <b>Suranjan Chaudhari</b></p>
+        <p>AIML Student · India 🇮🇳</p>
+        <p>
+            <a href="https://github.com/suranjan2006" target="_blank"
+               style="color:#58a6ff; text-decoration:none;">
+               GitHub
+            </a>
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
